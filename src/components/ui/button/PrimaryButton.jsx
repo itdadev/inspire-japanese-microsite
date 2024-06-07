@@ -27,14 +27,14 @@ const ContainerLink = styled(Link)(({theme, thick}) => ({
   padding: thick === "true" ? '2rem' : '1rem 0',
 }))
 
-const PrimaryButton = ({ children, linkTo, thick }) => {
+const PrimaryButton = ({ children, linkTo, thick, buttonEvent }) => {
   return (
     linkTo ?
-      <ContainerLink to={linkTo} thick={thick ? "true" : "false"}>
+      <ContainerLink to={linkTo} thick={thick ? "true" : "false"} onClick={buttonEvent}>
         {children}
       </ContainerLink>
       :
-      <Container thick={thick ? "true" : "false"}>
+      <Container thick={thick ? "true" : "false"} onClick={buttonEvent}>
         {children}
       </Container>
   );

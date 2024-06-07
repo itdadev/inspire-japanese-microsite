@@ -12,7 +12,7 @@ const queryClientConfig = {
       refetchOnReconnect: true,
       refetchInterval: 60 * 1000 * 180, // 3 hrs
       refetchIntervalInBackground: true,
-      suspense: false,
+      suspense: true,
       staleTime: 60 * 1000 * 180, // 3 hrs,
       cacheTime: 60 * 1000 * 180, // 3 hrs,
       keepPreviousData: true,

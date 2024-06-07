@@ -2,13 +2,18 @@ import React, {useCallback, useState} from 'react';
 import styled from "@emotion/styled";
 import {image} from "@/theme";
 import {RiCloseCircleLine} from "@remixicon/react";
+import {mq} from "@/lib/react-responsive/mediaQuery";
 
 const Container = styled.form(() => ({
   display: 'flex',
   alignItems: 'center',
-  maxWidth: '50%',
-  margin: '6rem auto',
   gap: '0 1rem',
+  margin: '6rem 0',
+
+    [mq("desktop")] : {
+    maxWidth: '50%',
+    margin: '6rem auto',
+  }
 }))
 
 const Wrapper = styled.div(({theme}) => ({
@@ -37,6 +42,9 @@ const Button = styled.button(() => ({
 }));
 
 const SearchButton = styled.button(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   border: `2px solid ${theme.color.point01}`,
   borderRadius: '50%',
   width: '4rem',
@@ -50,7 +58,7 @@ const SearchButton = styled.button(({ theme }) => ({
 }));
 
 
-const BlogSearchBar = ({  setSearchKeyword }) => {
+const BlogSearchBar = ({  setSearchKeyword, listRef,  setPage }) => {
   const [keyword, setKeyword] = useState("");
 
   const changeKeywordInput = useCallback(
@@ -62,6 +70,7 @@ const BlogSearchBar = ({  setSearchKeyword }) => {
 
   const submitSearchKeyword = useCallback((e) => {
     e.preventDefault();
+    setPage(1)
 
     setSearchKeyword(keyword);
 
@@ -74,11 +83,11 @@ const BlogSearchBar = ({  setSearchKeyword }) => {
   }, [setSearchKeyword]);
 
   return (
-    <Container onSubmit={submitSearchKeyword}>
+    <Container onSubmit={submitSearchKeyword} ref={listRef}>
       <Wrapper>
         <StyledInput
           type="text"
-          placeholder="Search with title..."
+          placeholder="Search with title or contents"
           value={keyword}
           onChange={(e) => changeKeywordInput(e)}
         />

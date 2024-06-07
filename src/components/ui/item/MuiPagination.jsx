@@ -4,6 +4,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import {Pagination} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {scrollInToViewBasic} from "@/utils/Functions";
 
 const Container = styled.div(() => ({
   display: "flex",
@@ -23,14 +24,11 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
   },
 }));
 
-const MuiPagination = ({  count, page, setPage }) => {
+const MuiPagination = ({  count, page, setPage, listRef }) => {
   const handleChange = (_, value) => {
     setPage(value);
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    scrollInToViewBasic(listRef);
   };
 
   return (

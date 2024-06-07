@@ -26,7 +26,7 @@ export const IsDefault = ({ children }) => {
 
 const bp = {
   mobile: 360,
-  tablet: 768,
+  tablet: 640,
   desktop: 1240,
 };
 

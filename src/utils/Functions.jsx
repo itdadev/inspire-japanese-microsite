@@ -5,3 +5,13 @@ export function switchSlashToEmptySpace(value) {
     return value.replaceAll("//", "<wbr/>");
   }
 }
+
+export function scrollInToViewBasic(scrollRef) {
+  scrollRef.current.scrollIntoView({ behavior: "smooth" });
+
+  scrollRef.current.scrollTo({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "center",
+  });
+}

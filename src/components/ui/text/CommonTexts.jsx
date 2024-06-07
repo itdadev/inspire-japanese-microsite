@@ -4,10 +4,10 @@ import {mq} from "@/lib/react-responsive/mediaQuery";
 export const CommonTitleOne = styled.h2(({ theme, lowercase }) => ({
   fontWeight: theme.fontWeight.extraBold,
   textTransform: lowercase ? "initial" : "uppercase",
-  fontSize: "2.4rem",
+  fontSize: "3.2rem",
 
   [mq("tablet")]: {
-    fontSize: "3.6rem",
+    fontSize: "4.2rem",
   },
 
   [mq("desktop")]: {
