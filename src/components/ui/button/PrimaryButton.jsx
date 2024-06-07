@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from "@emotion/styled";
-import {Link} from "react-router-dom";
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
-const Container = styled.div(({theme}) => ({
+const Container = styled.div(({ theme, maxWidth }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -10,11 +10,12 @@ const Container = styled.div(({theme}) => ({
   fontWeight: theme.fontWeight.medium,
   background: theme.color.point01,
   borderRadius: '1.2rem',
+  maxWidth: maxWidth ? maxWidth : '32rem',
   width: '100%',
   padding: '1rem 0',
-}))
+}));
 
-const ContainerLink = styled(Link)(({theme, thick}) => ({
+const ContainerLink = styled(Link)(({ theme, thick, maxWidth }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -22,21 +23,25 @@ const ContainerLink = styled(Link)(({theme, thick}) => ({
   fontWeight: theme.fontWeight.medium,
   background: theme.color.point01,
   borderRadius: '1rem',
-  maxWidth: '32rem',
+  maxWidth: maxWidth ? maxWidth : '32rem',
   width: '100%',
-  padding: thick === "true" ? '2rem' : '1rem 0',
-}))
+  padding: thick === 'true' ? '2rem' : '1rem 0',
+}));
 
-const PrimaryButton = ({ children, linkTo, thick, buttonEvent }) => {
-  return (
-    linkTo ?
-      <ContainerLink to={linkTo} thick={thick ? "true" : "false"} onClick={buttonEvent}>
-        {children}
-      </ContainerLink>
-      :
-      <Container thick={thick ? "true" : "false"} onClick={buttonEvent}>
-        {children}
-      </Container>
+const PrimaryButton = ({ children, linkTo, thick, buttonEvent, maxWidth }) => {
+  return linkTo ? (
+    <ContainerLink
+      to={linkTo}
+      thick={thick ? 'true' : 'false'}
+      onClick={buttonEvent}
+      maxWidth={maxWidth}
+    >
+      {children}
+    </ContainerLink>
+  ) : (
+    <Container thick={thick ? 'true' : 'false'} onClick={buttonEvent} maxWidth={maxWidth}>
+      {children}
+    </Container>
   );
 };
 

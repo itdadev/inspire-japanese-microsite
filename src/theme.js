@@ -1,41 +1,42 @@
 // NOTE: 공통 이미지
-import {mq} from "@/lib/react-responsive/mediaQuery";
+import { mq } from '@/lib/react-responsive/mediaQuery';
 
 export const image = {
-  logo: require("@/assets/images/inspire-logo.svg"),
-  bannerImage: require("@/assets/images/banner-image.png"),
+  logo: require('@/assets/images/inspire-logo.svg'),
+  bannerImage: require('@/assets/images/banner-image.png'),
 
   //   icons
-  logoWhite: require("@/assets/icons/logo-white-full.svg"),
-  shareIcon: require("@/assets/icons/share-icon.svg"),
-  articleLogo: require("@/assets/icons/article-logo.svg"),
-  refreshIcon: require("@/assets/icons/refresh.svg"),
-  searchIcon: require("@/assets/icons/search-icon.svg"),
-}
+  logoWhite: require('@/assets/icons/logo-white-full.svg'),
+  shareIcon: require('@/assets/icons/share-icon.svg'),
+  articleLogo: require('@/assets/icons/article-logo.svg'),
+  refreshIcon: require('@/assets/icons/refresh.svg'),
+  searchIcon: require('@/assets/icons/search-icon.svg'),
+};
 
 // NOTE: 공통 컬러
 export const color = {
-  primary: "#CB88CB",
-  point01: "#6F5B7F",
-  point02: "#7C8FAC",
-}
+  primary: '#CB88CB',
+  point01: '#6F5B7F',
+  point02: '#7C8FAC',
+  grey01: '#a6a6a6',
+};
 
 export const AppTheme = {
   image,
   color,
   palette: {
     primary: {
-      main: "#68507C",
+      main: '#68507C',
     },
   },
   typography: {
     htmlFontSize: 10,
 
-    [mq("mobile")]: {
+    [mq('mobile')]: {
       fontSize: 14,
     },
 
-    [mq("desktop")]: {
+    [mq('desktop')]: {
       fontSize: 16,
     },
   },
@@ -51,10 +52,8 @@ export const AppTheme = {
     extraBold: 800,
     black: 900,
   },
-  shadow: {
-  },
-  radius: {
-  },
+  shadow: {},
+  radius: {},
 };
 
 export default AppTheme;

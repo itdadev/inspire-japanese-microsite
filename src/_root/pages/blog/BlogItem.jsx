@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { DangerouslyHtml, ImageFigure } from '@/components/ui/item';
 import { PrimaryButton } from '@/components/ui/button';
 import { LOCAL_STORAGE_PAGE } from '@/constants/storageKey';
+import { TagListType1, TagListType2, TagListType3 } from '@/_root/pages/blog/TagLists';
 
 const Container = styled.div(() => ({
   borderRadius: '1.5rem',
   overflow: 'hidden',
   boxShadow: '10px 10px 20px rgba(0,0,0,0.1)',
-  maxHeight: '49rem',
+  maxHeight: '47rem',
   height: '100%',
 }));
 
 const TitleWrapper = styled.div(() => ({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -23,146 +25,127 @@ const TitleWrapper = styled.div(() => ({
 }));
 
 const Title = styled.header(({ theme }) => ({
-  minHeight: '4.3rem',
   fontSize: '2rem',
   fontWeight: theme.fontWeight.medium,
 }));
 
 const Date = styled.div(({ theme }) => ({
-  fontWeight: theme.fontWeight.medium,
+  fontSize: '1.4rem',
+  color: theme.color.grey01,
 }));
 
 const Description = styled.div(() => ({
   marginBottom: '1rem',
 }));
 
-const TagItem = styled.div(() => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  position: 'absolute',
-  zIndex: 1,
-  right: '1rem',
-  bottom: '1rem',
-  gap: '0.4rem',
-
-  span: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0.4rem 0.8rem',
-    fontSize: '1.2rem',
-    color: 'white',
-    backdropFilter: 'blur(1rem)',
-    background: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: '2rem',
-    border: `1px solid white`,
-  },
-}));
-
-const TagVersionTwo = styled.div(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  zIndex: 1,
-  right: '1rem',
-  bottom: '1rem',
-  gap: '0.4rem',
-  overflowX: 'hidden',
-  padding: '1rem 0',
-
-  '&::-webkit-scrollbar': {
-    display: 'none',
-  },
-
-  span: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0.4rem 0.8rem',
-    fontSize: '1.2rem',
-    color: '#555',
-    backdropFilter: 'blur(1rem)',
-    borderRadius: '2rem',
-    border: `1px solid #d4d4d4`,
-    whiteSpace: 'nowrap',
-  },
-}));
-
 const ContentWrapper = styled.div(() => ({
   padding: '1rem 2rem',
 }));
 
-const TagWrapper = styled.div(() => ({
+const ContentIn = styled.div(() => ({
   display: 'flex',
-  alignItems: 'center',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-  width: '100%',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
 const BlogItem = ({ item, page }) => {
-  const tagsRef = useRef(null);
+  const containerRef = useRef(null);
+
+  const [visibleTags, setVisibleTags] = useState(item?.field_hash_tags);
+  const [isOverflowing, setIsOverflowing] = useState(false);
 
   const storePage = useCallback(() => {
     localStorage.setItem(LOCAL_STORAGE_PAGE, page);
   }, [page]);
 
   useEffect(() => {
-    console.log(tagsRef.current.clientWidth);
-  }, []);
+    const checkOverflow = () => {
+      const container = containerRef.current;
 
+      if (container?.scrollWidth > container?.clientWidth) {
+        setIsOverflowing(true);
+
+        // 동적으로 줄어든 해쉬태그 리스트 생성
+        let totalWidth = 0;
+
+        let newVisibleTags = [];
+
+        for (const tag of item?.field_hash_tags) {
+          const tagElement = document.createElement('span');
+
+          tagElement.style.visibility = 'hidden';
+
+          tagElement.style.whiteSpace = 'nowrap';
+
+          tagElement.textContent = tag;
+
+          container.appendChild(tagElement);
+
+          totalWidth += tagElement.offsetWidth;
+
+          container.removeChild(tagElement);
+
+          if (totalWidth + 40 > container.clientWidth) break; // '...''의 너비 고려
+
+          newVisibleTags.push(tag);
+        }
+
+        setVisibleTags(newVisibleTags);
+      } else {
+        setIsOverflowing(false);
+
+        setVisibleTags(item?.field_hash_tags);
+      }
+    };
+
+    checkOverflow();
+
+    window.addEventListener('resize', checkOverflow);
+
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [item?.field_hash_tags]);
+
+  console.log(item);
   return (
     <Container>
       <ImageFigure src={item.field_thumbnail} alt={item.field_name} ratio="3 / 2" maxHeight={250}>
-        {(item.field_tag_position === 'on_the_image' || item.field_tag_position === '') && (
-          <TagItem ref={tagsRef} long={tagsRef.current?.clientWidth > 320}>
-            {item.field_hash_tags?.map((tag) => {
-              return <span key={tag}>#{tag}</span>;
-            })}
-          </TagItem>
-        )}
+        <TagListType1 item={item} />
       </ImageFigure>
 
       <ContentWrapper>
-        <TitleWrapper>
-          {item.field_tag_position === 'above_the_title' && (
-            <TagWrapper>
-              <TagVersionTwo ref={tagsRef} long={tagsRef.current?.clientWidth > 320}>
-                {item.field_hash_tags?.map((tag) => {
-                  return <span key={tag}>#{tag}</span>;
-                })}
-              </TagVersionTwo>
-            </TagWrapper>
-          )}
+        <ContentIn>
+          <TitleWrapper>
+            <TagListType2
+              item={item}
+              containerRef={containerRef}
+              visibleTags={visibleTags}
+              isOverflowing={isOverflowing}
+            />
 
-          <Title className="ellipsis-2">{item.field_name}</Title>
+            <Title className="ellipsis-1">{item.field_name}</Title>
 
-          <Date>{item.field_date}</Date>
+            {item.field_post_date && <Date>{item.field_post_date}</Date>}
 
-          <Description>
-            <DangerouslyHtml value={item.field_short_description} className="ellipsis-2" />
-          </Description>
+            <Description>
+              <DangerouslyHtml value={item.field_short_description} className="ellipsis-2" />
+            </Description>
+          </TitleWrapper>
 
           <PrimaryButton
+            maxWidth="100%"
             linkTo={`/news${item.view_node.replace('/japan', '')}`}
             buttonEvent={storePage}
           >
             View Detail
           </PrimaryButton>
-        </TitleWrapper>
+        </ContentIn>
 
-        {item.field_tag_position === 'below_the_title' && (
-          <TagWrapper>
-            <TagVersionTwo ref={tagsRef} long={tagsRef.current?.clientWidth > 320}>
-              {item.field_hash_tags?.map((tag) => {
-                return <span key={tag}>#{tag}</span>;
-              })}
-            </TagVersionTwo>
-          </TagWrapper>
-        )}
+        <TagListType3
+          item={item}
+          containerRef={containerRef}
+          visibleTags={visibleTags}
+          isOverflowing={isOverflowing}
+        />
       </ContentWrapper>
     </Container>
   );
