@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { BLOG_TAG_LIST_KEY } from '@/constants/queryKeys';
 import axios from 'axios';
-import { BLOG_LIST_URL } from '@/constants/apiUrls';
+import { BLOG_TAG_LIST } from '@/constants/apiUrls';
 
 const TagList = styled.div(() => ({
   display: 'flex',
@@ -37,10 +37,11 @@ export const TagItem = styled.button(({ theme, refresh, active, nonClickable }) 
 const BlogTagList = ({ selectedTags, setSelectedTags, setPage }) => {
   const { data: blogTagList } = useQuery({
     queryKey: [BLOG_TAG_LIST_KEY, selectedTags],
-    queryFn: () => axios.get(`${BLOG_LIST_URL}`),
-    select: (data) => data.data.rows,
+    queryFn: () => axios.get(`${BLOG_TAG_LIST}`),
+    select: (data) => data.data.top_hash_tags,
   });
 
+  console.log(blogTagList);
   const toggleFilters = useCallback(
     (id) => {
       setPage(1);
@@ -60,18 +61,16 @@ const BlogTagList = ({ selectedTags, setSelectedTags, setPage }) => {
     <TagList>
       <div>Top 10 :</div>
 
-      {blogTagList.map((rows) => {
-        return rows.field_hash_tags.map((tag) => {
-          return (
-            <TagItem
-              key={tag}
-              active={selectedTags.includes(tag)}
-              onClick={() => toggleFilters(tag)}
-            >
-              #{tag}
-            </TagItem>
-          );
-        });
+      {blogTagList?.map((tag) => {
+        return (
+          <TagItem
+            key={tag.id}
+            active={selectedTags.includes(tag.name)}
+            onClick={() => toggleFilters(tag.name)}
+          >
+            #{tag.name}
+          </TagItem>
+        );
       })}
     </TagList>
   );

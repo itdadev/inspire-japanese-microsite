@@ -1,6 +1,5 @@
-
-import React from "react";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // NOTE: React Query - default settings
 const queryClientConfig = {
@@ -12,7 +11,7 @@ const queryClientConfig = {
       refetchOnReconnect: true,
       refetchInterval: 60 * 1000 * 180, // 3 hrs
       refetchIntervalInBackground: true,
-      suspense: true,
+      suspense: false,
       staleTime: 60 * 1000 * 180, // 3 hrs,
       cacheTime: 60 * 1000 * 180, // 3 hrs,
       keepPreviousData: true,
@@ -26,7 +25,5 @@ const queryClientConfig = {
 const queryClient = new QueryClient(queryClientConfig);
 
 export const QueryProvider = ({ children }) => {
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };

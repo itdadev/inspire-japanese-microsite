@@ -11,6 +11,7 @@ import { BLOG_LIST_URL } from '@/constants/apiUrls';
 import { BlogItem, BlogSearchBar, BlogTagList } from '@/_root/pages/blog';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Banner } from '@/components/shared/banner';
+import { BlogItemSkeleton } from '@/components/ui/skeleton';
 
 const Container = styled.div(() => ({}));
 
@@ -41,7 +42,7 @@ const Home = () => {
 
   const [page, setPage] = useState(currentPage);
 
-  const { data: blogList } = useQuery({
+  const { data: blogList, isFetching } = useQuery({
     queryKey: [BLOG_LIST_KEY, page, selectedTags, searchKeyword],
     queryFn: () =>
       axios.get(
@@ -58,7 +59,7 @@ const Home = () => {
         searchKeyword !== '' ? `&keyword=${searchKeyword}` : ''
       }`
     );
-  }, [page, searchKeyword, selectedTags]);
+  }, [page, searchKeyword, selectedTags, navigate]);
 
   return (
     <Container>
@@ -83,7 +84,7 @@ const Home = () => {
           />
 
           <ListContainer>
-            {blogList.rows.map((item) => {
+            {blogList?.rows.map((item) => {
               return <BlogItem item={item} key={item.view_node} page={page} />;
             })}
           </ListContainer>
@@ -91,7 +92,7 @@ const Home = () => {
           <MuiPagination
             page={page}
             setPage={setPage}
-            count={blogList.pager.total_pages}
+            count={blogList?.pager.total_pages}
             listRef={listRef}
           />
         </Wrapper>

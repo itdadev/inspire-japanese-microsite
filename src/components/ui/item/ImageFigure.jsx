@@ -21,10 +21,7 @@ const ImageFigure = ({ ratio, src, alt, local, children, maxHeight }) => {
     <Container ratio={ratio} maxHeight={maxHeight}>
       {children}
 
-      <Image
-        src={local ? src : `${process.env.REACT_APP_BASE_URL}${src.replace('/japan', '')}`}
-        alt={alt}
-      />
+      <Image src={local ? src : `${process.env.REACT_APP_BASE_URL}${src}`} alt={alt} />
     </Container>
   );
 };

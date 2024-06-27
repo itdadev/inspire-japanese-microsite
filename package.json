@@ -30,8 +30,9 @@
     "zod": "^3.22.4"
   },
   "scripts": {
-    "start": "env-cmd -f .env.dev craco start",
-    "build": "env-cmd -f .env.prod craco build",
+    "start": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -f .env.dev craco start",
+    "start:mac": "GENERATE_SOURCEMAP=false env-cmd -f .env.dev craco start",
+    "build": "GENERATE_SOURCEMAP=false env-cmd -f .env.prod craco build",
     "test": "craco test",
     "eject": "craco eject",
     "start:prod": "env-cmd -f .env.prod craco start",

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.js": "/static/js/main.9d8326d6.js",
+    "static/media/banner-image.png": "/static/media/banner-image.032a0c76dfd799331c1e.png",
+    "static/media/inspire-logo.svg": "/static/media/inspire-logo.d842ed4955d1983e39a45ff7cb7d2e7a.svg",
+    "static/media/article-logo.svg": "/static/media/article-logo.bf3142973edbb70edde5f9264903bb16.svg",
+    "static/media/logo-white-full.svg": "/static/media/logo-white-full.54b5da902874484d37048fbb29366caa.svg",
+    "static/media/share-icon.svg": "/static/media/share-icon.b376a0f3086b70f10eafa9dabb4f6841.svg",
+    "static/media/search-icon.svg": "/static/media/search-icon.ff4bc0f994961d14394172372d7ecef7.svg",
+    "index.html": "/index.html",
+    "static/media/refresh.svg": "/static/media/refresh.f4457aa973062c6483f510b290b9072f.svg"
+  },
+  "entrypoints": [
+    "static/js/main.9d8326d6.js"
+  ]
+}

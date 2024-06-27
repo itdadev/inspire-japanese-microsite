@@ -48,7 +48,6 @@ const BlogDetail = () => {
     select: (data) => data.data.rows[0],
   });
 
-  console.log(blogDetail);
   return (
     <div>
       <DetailPageHero data={blogDetail} />
@@ -62,14 +61,14 @@ const BlogDetail = () => {
             height={160}
           />
 
-          <CommonTitleThree>{blogDetail.field_name}</CommonTitleThree>
+          <CommonTitleThree>{blogDetail?.field_name}</CommonTitleThree>
 
           <CommonDescTwo>
-            <DangerouslyHtml value={blogDetail.field_full_description} />
+            <DangerouslyHtml value={blogDetail?.field_full_description} />
           </CommonDescTwo>
 
           <TagList>
-            {blogDetail.field_hash_tags?.map((tag) => {
+            {blogDetail?.field_hash_tags?.map((tag) => {
               return (
                 <TagItem nonClickable key={tag}>
                   #{tag}

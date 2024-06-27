@@ -27,6 +27,7 @@ const TitleWrapper = styled.div(() => ({
 const Title = styled.header(({ theme }) => ({
   fontSize: '2rem',
   fontWeight: theme.fontWeight.medium,
+  minHeight: '2.6rem',
 }));
 
 const Date = styled.div(({ theme }) => ({
@@ -36,10 +37,12 @@ const Date = styled.div(({ theme }) => ({
 
 const Description = styled.div(() => ({
   marginBottom: '1rem',
+  minHeight: '4rem',
 }));
 
 const ContentWrapper = styled.div(() => ({
   padding: '1rem 2rem',
+  minHeight: '24.5rem',
 }));
 
 const ContentIn = styled.div(() => ({
@@ -105,10 +108,9 @@ const BlogItem = ({ item, page }) => {
     return () => window.removeEventListener('resize', checkOverflow);
   }, [item?.field_hash_tags]);
 
-  console.log(item);
   return (
     <Container>
-      <ImageFigure src={item.field_thumbnail} alt={item.field_name} ratio="3 / 2" maxHeight={250}>
+      <ImageFigure src={item.field_thumbnail} alt={item.field_name} ratio="3 / 2" maxHeight={220}>
         <TagListType1 item={item} />
       </ImageFigure>
 
@@ -131,11 +133,7 @@ const BlogItem = ({ item, page }) => {
             </Description>
           </TitleWrapper>
 
-          <PrimaryButton
-            maxWidth="100%"
-            linkTo={`/news${item.view_node.replace('/japan', '')}`}
-            buttonEvent={storePage}
-          >
+          <PrimaryButton maxWidth="100%" linkTo={`/news${item.view_node}`} buttonEvent={storePage}>
             View Detail
           </PrimaryButton>
         </ContentIn>

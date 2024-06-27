@@ -1,30 +1,27 @@
-import React from "react";
+import React from 'react';
 
-
-import styled from "@emotion/styled";
-import {Pagination} from "@mui/material";
-import {useNavigate} from "react-router-dom";
-import {scrollInToViewBasic} from "@/utils/Functions";
+import styled from '@emotion/styled';
+import { Pagination } from '@mui/material';
+import { scrollInToViewBasic } from '@/utils/Functions';
 
 const Container = styled.div(() => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: "8rem",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '8rem',
 }));
 
-
 const StyledPagination = styled(Pagination)(({ theme }) => ({
-  ".MuiPagination-ul": {
-    gap: "0 1rem",
+  '.MuiPagination-ul': {
+    gap: '0 1rem',
   },
 
-  "&.Mui-selected": {
+  '&.Mui-selected': {
     color: theme.color.point01,
   },
 }));
 
-const MuiPagination = ({  count, page, setPage, listRef }) => {
+const MuiPagination = ({ count, page, setPage, listRef }) => {
   const handleChange = (_, value) => {
     setPage(value);
 

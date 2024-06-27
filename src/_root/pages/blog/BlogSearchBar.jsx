@@ -1,8 +1,8 @@
-import React, {useCallback, useState} from 'react';
-import styled from "@emotion/styled";
-import {image} from "@/theme";
-import {RiCloseCircleLine} from "@remixicon/react";
-import {mq} from "@/lib/react-responsive/mediaQuery";
+import React, { useCallback, useState } from 'react';
+import styled from '@emotion/styled';
+import { image } from '@/theme';
+import { RiCloseCircleLine } from '@remixicon/react';
+import { mq } from '@/lib/react-responsive/mediaQuery';
 
 const Container = styled.form(() => ({
   display: 'flex',
@@ -10,13 +10,13 @@ const Container = styled.form(() => ({
   gap: '0 1rem',
   margin: '6rem 0',
 
-    [mq("desktop")] : {
+  [mq('desktop')]: {
     maxWidth: '50%',
     margin: '6rem auto',
-  }
-}))
+  },
+}));
 
-const Wrapper = styled.div(({theme}) => ({
+const Wrapper = styled.div(({ theme }) => ({
   flex: 1,
   display: 'flex',
   alignItems: 'center',
@@ -25,11 +25,11 @@ const Wrapper = styled.div(({theme}) => ({
   border: `2px solid ${theme.color.point01}`,
   borderRadius: '6rem',
   height: '4rem',
-  gap: '0 2rem'
+  gap: '0 2rem',
 }));
 
 const StyledInput = styled.input(() => ({
-  flex:1,
+  flex: 1,
   display: 'inline-block',
   height: '100%',
   fontSize: '1.6rem',
@@ -52,34 +52,34 @@ const SearchButton = styled.button(({ theme }) => ({
 
   transition: 'all 0.3s',
 
-  "&:hover" : {
-    background: "rgba(104, 80, 124, 0.5)"
-  }
+  '&:hover': {
+    background: 'rgba(104, 80, 124, 0.5)',
+  },
 }));
 
-
-const BlogSearchBar = ({  setSearchKeyword, listRef,  setPage }) => {
-  const [keyword, setKeyword] = useState("");
+const BlogSearchBar = ({ setSearchKeyword, listRef, setPage }) => {
+  const [keyword, setKeyword] = useState('');
 
   const changeKeywordInput = useCallback(
     (e) => {
-      setKeyword(e.target.value)
+      setKeyword(e.target.value);
     },
-    [setKeyword],
+    [setKeyword]
   );
 
-  const submitSearchKeyword = useCallback((e) => {
-    e.preventDefault();
-    setPage(1)
+  const submitSearchKeyword = useCallback(
+    (e) => {
+      e.preventDefault();
+      setPage(1);
 
-    setSearchKeyword(keyword);
-
-  }, [setSearchKeyword, keyword]);
+      setSearchKeyword(keyword);
+    },
+    [setSearchKeyword, keyword, setPage]
+  );
 
   const clearSearchKeyword = useCallback(() => {
-    setSearchKeyword("");
-    setKeyword("")
-
+    setSearchKeyword('');
+    setKeyword('');
   }, [setSearchKeyword]);
 
   return (
@@ -92,17 +92,15 @@ const BlogSearchBar = ({  setSearchKeyword, listRef,  setPage }) => {
           onChange={(e) => changeKeywordInput(e)}
         />
 
-        {
-          keyword !== "" &&
+        {keyword !== '' && (
           <Button type="button" onClick={clearSearchKeyword}>
-            <RiCloseCircleLine color="#d4d4d4"/>
+            <RiCloseCircleLine color="#d4d4d4" />
           </Button>
-        }
-
+        )}
       </Wrapper>
 
       <SearchButton type="submit">
-        <img src={image.searchIcon.default} alt="" width={24}/>
+        <img src={image.searchIcon.default} alt="" width={24} />
       </SearchButton>
     </Container>
   );
