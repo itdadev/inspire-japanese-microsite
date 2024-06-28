@@ -30,8 +30,8 @@ const TitleWrapper = styled.div(() => ({
   textAlign: 'center',
 }));
 
-const Home = ({ mainRef }) => {
-  const ITEMS_PER_PAGE = 6;
+const Home = () => {
+  const mainRef = useRef(null);
 
   const listRef = useRef(null);
 
@@ -59,8 +59,6 @@ const Home = ({ mainRef }) => {
     select: (data) => data.data,
   });
 
-  console.log(Number(blogList?.pager.total_items));
-
   useEffect(() => {
     navigate(
       `/?page=${page}${selectedTags.length > 0 ? `&tags=${selectedTags}` : ''}${
@@ -68,6 +66,13 @@ const Home = ({ mainRef }) => {
       }`
     );
   }, [page, searchKeyword, selectedTags, navigate]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scrollInToViewBasic(mainRef);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Container>
@@ -113,7 +118,7 @@ const Home = ({ mainRef }) => {
           <MuiPagination
             page={page}
             setPage={setPage}
-            count={Math.ceil(Number(blogList?.pager.total_items) / ITEMS_PER_PAGE)}
+            count={blogList?.pager.total_pages}
             listRef={listRef}
           />
         </Wrapper>
