@@ -2,15 +2,15 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = (app) => {
   app.use(
-    '/api/v1',
+    '/api',
     createProxyMiddleware({
-      target: process.env.REACT_APP_BASE_URL,
+      target: process.env.REACT_APP_WEBSITE_DRUPAL_URL,
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/sites/default',
+    '/blog-api',
     createProxyMiddleware({
       target: process.env.REACT_APP_BASE_URL,
       changeOrigin: true,

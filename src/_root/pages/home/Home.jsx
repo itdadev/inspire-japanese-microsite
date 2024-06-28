@@ -4,14 +4,15 @@ import axios from 'axios';
 
 import { CommonContainer, ListContainer } from '@/components/ui/container';
 import { CommonDescOne, CommonTitleOne } from '@/components/ui/text/CommonTexts';
-import { MuiPagination } from '@/components/ui/item';
+import { DangerouslyHtml, MuiPagination } from '@/components/ui/item';
 import { BLOG_LIST_KEY } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { BLOG_LIST_URL } from '@/constants/apiUrls';
 import { BlogItem, BlogSearchBar, BlogTagList } from '@/_root/pages/blog';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Banner } from '@/components/shared/banner';
-import { BlogItemSkeleton } from '@/components/ui/skeleton';
+import { useGetStaticTexts } from '@/hooks/Requests';
+import { scrollInToViewBasic } from '@/utils/Functions';
 
 const Container = styled.div(() => ({}));
 
@@ -26,9 +27,12 @@ const TitleWrapper = styled.div(() => ({
   justifyContent: 'center',
   gap: '2rem 0',
   marginBottom: '8rem',
+  textAlign: 'center',
 }));
 
-const Home = () => {
+const Home = ({ mainRef }) => {
+  const ITEMS_PER_PAGE = 6;
+
   const listRef = useRef(null);
 
   const navigate = useNavigate();
@@ -42,7 +46,9 @@ const Home = () => {
 
   const [page, setPage] = useState(currentPage);
 
-  const { data: blogList, isFetching } = useQuery({
+  const { data: blogStaticTexts } = useGetStaticTexts();
+
+  const { data: blogList } = useQuery({
     queryKey: [BLOG_LIST_KEY, page, selectedTags, searchKeyword],
     queryFn: () =>
       axios.get(
@@ -52,6 +58,8 @@ const Home = () => {
       ),
     select: (data) => data.data,
   });
+
+  console.log(Number(blogList?.pager.total_items));
 
   useEffect(() => {
     navigate(
@@ -66,33 +74,46 @@ const Home = () => {
       <Banner />
 
       <CommonContainer>
-        <Wrapper>
+        <Wrapper ref={mainRef}>
           <TitleWrapper>
-            <CommonTitleOne>INSPIRE Blog</CommonTitleOne>
+            <CommonTitleOne>{blogStaticTexts?.field_main_title}</CommonTitleOne>
 
             <CommonDescOne>
-              Follow the latest news on INSPIRE Entertainment Resort here.
+              <DangerouslyHtml value={blogStaticTexts?.field_main_description} />
             </CommonDescOne>
           </TitleWrapper>
 
-          <BlogSearchBar setSearchKeyword={setSearchKeyword} listRef={listRef} setPage={setPage} />
+          <BlogSearchBar
+            setSearchKeyword={setSearchKeyword}
+            listRef={listRef}
+            setPage={setPage}
+            staticTexts={blogStaticTexts}
+          />
 
           <BlogTagList
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
             setPage={setPage}
+            staticTexts={blogStaticTexts}
           />
 
           <ListContainer>
             {blogList?.rows.map((item) => {
-              return <BlogItem item={item} key={item.view_node} page={page} />;
+              return (
+                <BlogItem
+                  item={item}
+                  key={item.view_node}
+                  page={page}
+                  staticTexts={blogStaticTexts}
+                />
+              );
             })}
           </ListContainer>
 
           <MuiPagination
             page={page}
             setPage={setPage}
-            count={blogList?.pager.total_pages}
+            count={Math.ceil(Number(blogList?.pager.total_items) / ITEMS_PER_PAGE)}
             listRef={listRef}
           />
         </Wrapper>

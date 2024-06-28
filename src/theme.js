@@ -4,6 +4,8 @@ import { mq } from '@/lib/react-responsive/mediaQuery';
 export const image = {
   logo: require('@/assets/images/inspire-logo.svg'),
   bannerImage: require('@/assets/images/banner-image.png'),
+  footerBackground: require('@/assets/images/footer-background.png'),
+  footerBackgroundMobile: require('@/assets/images/footer-background-mobile.png'),
 
   //   icons
   logoWhite: require('@/assets/icons/logo-white-full.svg'),

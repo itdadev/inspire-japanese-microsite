@@ -57,7 +57,7 @@ const SearchButton = styled.button(({ theme }) => ({
   },
 }));
 
-const BlogSearchBar = ({ setSearchKeyword, listRef, setPage }) => {
+const BlogSearchBar = ({ setSearchKeyword, listRef, setPage, staticTexts }) => {
   const [keyword, setKeyword] = useState('');
 
   const changeKeywordInput = useCallback(
@@ -87,7 +87,7 @@ const BlogSearchBar = ({ setSearchKeyword, listRef, setPage }) => {
       <Wrapper>
         <StyledInput
           type="text"
-          placeholder="Search with title or contents"
+          placeholder={staticTexts?.field_search_bar_description}
           value={keyword}
           onChange={(e) => changeKeywordInput(e)}
         />

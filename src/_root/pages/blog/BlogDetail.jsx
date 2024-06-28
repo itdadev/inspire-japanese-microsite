@@ -12,6 +12,7 @@ import { image } from '@/theme';
 import { PrimaryButton } from '@/components/ui/button';
 import { TagItem } from '@/_root/pages/blog/BlogTagList';
 import { LOCAL_STORAGE_PAGE } from '@/constants/storageKey';
+import { useGetStaticTexts } from '@/hooks/Requests';
 
 const Wrapper = styled.div(() => ({
   display: 'flex',
@@ -28,16 +29,18 @@ const ButtonWrapper = styled.div(() => ({
   width: '100%',
 }));
 
-const TagList = styled.div(() => ({
+const TagList = styled.div(({ center }) => ({
   display: 'flex',
   flexWrap: 'wrap',
-  justifyContent: 'flex-end',
+  justifyContent: center ? 'center' : 'flex-end',
   gap: '0 0.4rem',
   width: '100%',
 }));
 
 const BlogDetail = () => {
   const { blogAlias } = useParams();
+
+  const { data: blogStaticTexts } = useGetStaticTexts();
 
   const page = localStorage.getItem(LOCAL_STORAGE_PAGE);
 
@@ -63,6 +66,16 @@ const BlogDetail = () => {
 
           <CommonTitleThree>{blogDetail?.field_name}</CommonTitleThree>
 
+          <TagList center>
+            {blogDetail?.field_hash_tags?.map((tag) => {
+              return (
+                <TagItem nonClickable key={tag}>
+                  #{tag}
+                </TagItem>
+              );
+            })}
+          </TagList>
+
           <CommonDescTwo>
             <DangerouslyHtml value={blogDetail?.field_full_description} />
           </CommonDescTwo>
@@ -79,7 +92,7 @@ const BlogDetail = () => {
 
           <ButtonWrapper>
             <PrimaryButton linkTo={`/?page=${page}`} thick>
-              Back to List
+              {blogStaticTexts?.field_back_to_list_text}
             </PrimaryButton>
           </ButtonWrapper>
         </Wrapper>

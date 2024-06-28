@@ -51,7 +51,7 @@ const ContentIn = styled.div(() => ({
   justifyContent: 'space-between',
 }));
 
-const BlogItem = ({ item, page }) => {
+const BlogItem = ({ item, page, staticTexts }) => {
   const containerRef = useRef(null);
 
   const [visibleTags, setVisibleTags] = useState(item?.field_hash_tags);
@@ -134,7 +134,7 @@ const BlogItem = ({ item, page }) => {
           </TitleWrapper>
 
           <PrimaryButton maxWidth="100%" linkTo={`/news${item.view_node}`} buttonEvent={storePage}>
-            View Detail
+            {staticTexts?.field_view_detail_button_text}
           </PrimaryButton>
         </ContentIn>
 

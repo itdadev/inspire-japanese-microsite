@@ -5,13 +5,8 @@ import { mq } from '@/lib/react-responsive/mediaQuery';
 const Container = styled.div(() => ({
   position: 'relative',
   width: '100%',
-  aspectRatio: '1 / 1',
+  aspectRatio: '16 / 9',
   overflow: 'hidden',
-
-  [mq('tablet')]: {
-    aspectRatio: '3 / 2',
-    height: '100%',
-  },
 
   [mq('desktop')]: {
     aspectRatio: '3 / 1',
