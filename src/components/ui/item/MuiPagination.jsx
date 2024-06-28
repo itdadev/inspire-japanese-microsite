@@ -25,7 +25,9 @@ const MuiPagination = ({ count, page, setPage, listRef }) => {
   const handleChange = (_, value) => {
     setPage(value);
 
-    scrollInToViewBasic(listRef);
+    if (listRef) {
+      scrollInToViewBasic(listRef);
+    }
   };
 
   return (
