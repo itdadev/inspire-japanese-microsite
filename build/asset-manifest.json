@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/static/js/main.9d8326d6.js",
+    "main.js": "/static/js/main.f921fcc3.js",
     "static/media/banner-image.png": "/static/media/banner-image.032a0c76dfd799331c1e.png",
     "static/media/inspire-logo.svg": "/static/media/inspire-logo.d842ed4955d1983e39a45ff7cb7d2e7a.svg",
     "static/media/article-logo.svg": "/static/media/article-logo.bf3142973edbb70edde5f9264903bb16.svg",
@@ -11,6 +11,6 @@
     "static/media/refresh.svg": "/static/media/refresh.f4457aa973062c6483f510b290b9072f.svg"
   },
   "entrypoints": [
-    "static/js/main.9d8326d6.js"
+    "static/js/main.f921fcc3.js"
   ]
 }

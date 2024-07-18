@@ -16,4 +16,12 @@ module.exports = (app) => {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/sites/default',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_BASE_URL,
+      changeOrigin: true,
+    })
+  );
 };

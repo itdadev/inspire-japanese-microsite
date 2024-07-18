@@ -71,7 +71,7 @@ const Home = ({ mainRef }) => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [mainRef]);
 
   useEffect(() => {
     if (selectedTags?.length > 0) {

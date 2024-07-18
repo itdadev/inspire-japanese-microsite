@@ -165,7 +165,7 @@ const FooterTop = ({ footerAddress, footerMenu, footerContact }) => {
         {footerAddress?.field_footerlogo && (
           <FooterLogoWrapper>
             <FooterLogo
-              data={`${process.env.REACT_APP_WEBSITE_DRUPAL_URL}${footerAddress?.field_footerlogo[0]?.src}`}
+              data={`${process.env.REACT_APP_WEBSITE_DRUPAL_URL}/${footerAddress?.field_footerlogo[0]?.src}`}
               alt={footerAddress.field_footerlogo[0]?.alt}
             />
           </FooterLogoWrapper>
